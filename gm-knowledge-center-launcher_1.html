@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GM Team Packet</title>
+<style>
+/* =========================================================
+   GM KNOWLEDGE CENTER — editorial / classic
+   Ink    #0B1F5C (GM navy)     Accent #3153ED (GM blue)
+   Grey   #6E7487               Rule   #E4E6EC
+   One flourish: the short blue hairline under the masthead label.
+   ========================================================= */
+:root{
+  --ink:#0B1F5C; --ink-soft:#3D4560; --grey:#6E7487;
+  --paper:#FFFFFF; --bg:#F5F6F8; --accent:#3153ED;
+  --rule:#E4E6EC; --hover:#F6F7FA; --band:#0B1F5C;
+  --padx:22px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#F1F3F8; --ink-soft:#C3C8D6; --grey:#8C93A6;
+    --paper:#10141C; --bg:#0A0D13; --accent:#8EA0FF;
+    --rule:rgba(255,255,255,.10); --hover:#161B25; --band:#132A73;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{display:flex;justify-content:center;padding:10px}
+a{color:inherit;text-decoration:none}
+
+.frame{width:100%;max-width:520px;aspect-ratio:4/3;background:var(--paper);border:1px solid var(--rule);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+
+/* ===== MASTHEAD ===== */
+.mast{flex:0 0 auto;padding:18px var(--padx) 16px;background:var(--band);color:#fff}
+.mast-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.mark{height:24px;display:flex;align-items:center}
+.mark img{height:100%;width:auto;display:block}
+.wordmark{font-size:10.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.loc{font-size:10px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#AFC0FF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45%}
+.rule-accent{width:30px;height:2px;background:#6F8BFF;margin:14px 0 10px}
+.title{font-size:26px;font-weight:300;letter-spacing:-.005em;line-height:1.15;color:#fff}
+.sub{font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== TOPIC GRID (hairline table) ===== */
+.grid{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:.7fr 1fr 1fr;gap:1px;background:var(--rule)}
+.btn{--c:var(--accent);min-width:0;min-height:0;container-type:size;background:var(--paper);display:block;outline:none;transition:background-color .2s}
+.btn-in{height:100%;padding:12px var(--padx);display:flex;flex-direction:column;justify-content:center;gap:5px;position:relative}
+.btn-in::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c);transform:scaleY(0);transition:transform .2s}
+.btn:hover .btn-in::before,.btn:focus-visible .btn-in::before{transform:scaleY(1)}
+.btn:hover{background:color-mix(in srgb,var(--c) 5%,var(--paper))!important}
+.btn[data-k="meeting"]{--c:#3153ED}.btn[data-k="safety"]{--c:#D9822B}.btn[data-k="production"]{--c:#2F6FD6}.btn[data-k="quality"]{--c:#2E9E6A}.btn[data-k="recognition"]{--c:#C29224}
+.btn:hover,.btn:focus-visible{background:var(--hover)}
+.btn:focus-visible .t2{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
+.btn[data-k="meeting"]{grid-column:1/-1}
+.head{display:flex;align-items:center;gap:10px}
+.ic{width:28px;height:28px;flex:0 0 auto;border-radius:50%;background:color-mix(in srgb,var(--c) 13%,transparent);color:var(--c);display:flex;align-items:center;justify-content:center}
+.ic svg{width:16px;height:16px;display:block}
+.num{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;letter-spacing:.01em;color:var(--grey);white-space:nowrap}
+.num:empty{display:none}
+.num.fresh{color:var(--c);font-weight:600}
+.num.fresh::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 20%,transparent)}
+.t2{font-size:clamp(15px,7.2cqi,18px);font-weight:400;letter-spacing:.005em;line-height:1.2;color:var(--ink);margin-top:2px}
+.d2{font-size:12px;line-height:1.45;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.go{position:absolute;right:calc(var(--padx) - 4px);top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--grey);transition:transform .2s,color .2s}
+.go svg{width:100%;height:100%;display:block}
+.btn:hover .go{color:var(--c);transform:translate(3px,-50%)}
+.txt{padding-right:26px;min-width:0}
+
+/* Meeting row: inline layout */
+.btn[data-k="meeting"] .btn-in{flex-direction:row;align-items:center;justify-content:flex-start;gap:14px}
+.btn[data-k="meeting"] .t2{margin-top:0}
+
+.btn[data-k="meeting"] .head,.frame[data-ratio="portrait"] .btn .head{display:contents}
+.btn[data-k="meeting"] .ic,.frame[data-ratio="portrait"] .btn .ic{order:0}
+.btn[data-k="meeting"] .txt,.frame[data-ratio="portrait"] .btn .txt{order:1;flex:1;padding-right:0}
+.btn[data-k="meeting"] .num,.frame[data-ratio="portrait"] .btn .num{order:2;flex:0 0 auto;margin-right:30px}
+/* Cells adapt to their own height */
+@container (max-height:96px){ .d2{display:none} .t2{margin-top:0} }
+@container (max-height:62px){
+  .btn-in{flex-direction:row!important;align-items:center;justify-content:flex-start;gap:10px}
+  .num{display:none}
+  .t2{font-size:clamp(13.5px,min(7cqi,34cqh),16px)}
+}
+@container (max-width:170px){ .num{display:none} .go{display:none} .txt{padding-right:0} }
+
+/* ===== RATIOS ===== */
+.frame[data-ratio="square"] .mast{padding-top:24px;padding-bottom:20px}
+.frame[data-ratio="square"] .title{font-size:30px}
+.frame[data-ratio="landscape"] .mast{padding:12px var(--padx) 12px}
+.frame[data-ratio="landscape"] .rule-accent{margin:10px 0 6px}
+.frame[data-ratio="landscape"] .title{font-size:21px}
+.frame[data-ratio="landscape"] .sub{display:none}
+.frame[data-ratio="landscape"] .grid{grid-template-columns:repeat(4,1fr);grid-template-rows:.55fr 1fr}
+.frame[data-ratio="landscape"] .btn-in{padding:10px 16px}
+.frame[data-ratio="landscape"] .go{display:none}
+.frame[data-ratio="landscape"] .txt{padding-right:0}
+.frame[data-ratio="landscape"] .btn:not([data-k="meeting"]) .d2{display:none}
+.frame[data-ratio="landscape"] .btn[data-k="meeting"] .go{display:block}
+.frame[data-ratio="portrait"] .mast{padding:28px var(--padx) 24px}
+.frame[data-ratio="portrait"] .title{font-size:32px}
+.frame[data-ratio="portrait"] .sub{white-space:normal}
+.frame[data-ratio="portrait"] .grid{grid-template-columns:1fr;grid-template-rows:repeat(5,1fr)}
+.frame[data-ratio="portrait"] .btn-in{flex-direction:row;align-items:center;justify-content:flex-start;gap:14px}
+.frame[data-ratio="portrait"] .t2{margin-top:0}
+
+/* ===== NARROW ===== */
+@media (max-width:400px){
+  body{padding:6px}
+  :root{--padx:16px}
+  .mast{padding:14px var(--padx) 12px}
+  .rule-accent{margin:10px 0 8px}
+  .title{font-size:22px}
+  .sub{font-size:11.5px}
+  .loc{display:none}
+  .frame[data-ratio="landscape"] .grid{grid-template-columns:1fr 1fr;grid-template-rows:.7fr 1fr 1fr}
+  .frame[data-ratio="landscape"] .mast{padding:10px var(--padx)}
+  .frame[data-ratio="landscape"] .rule-accent,.frame[data-ratio="landscape"] .mast-top{display:none}
+  .frame[data-ratio="landscape"] .title{font-size:18px}
+  .frame[data-ratio="standard"] .sub{display:none}
+}
+@media (prefers-color-scheme: dark){
+  .btn[data-k="meeting"]{--c:#8EA0FF}.btn[data-k="safety"]{--c:#F0A55A}.btn[data-k="production"]{--c:#6FA2F5}.btn[data-k="quality"]{--c:#5CC796}.btn[data-k="recognition"]{--c:#E2B657}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="frame" id="frame" data-ratio="standard">
+  <header class="mast">
+    <div class="mast-top">
+      <div class="brand">
+        <!-- LOGO: drop the GM logo here as <span class="mark"><img alt="GM" src="data:image/png;base64,..."></span> -->
+        <span class="wordmark">General Motors</span>
+      </div>
+      <div class="loc" id="loc"></div>
+    </div>
+    <div class="rule-accent"></div>
+    <h1 class="title" id="title">Team Packet</h1>
+    <p class="sub" id="tagline">Resources and guidance for your team</p>
+  </header>
+
+  <nav class="grid" id="grid" aria-label="Team Packet topics"></nav>
+
+</div>
+
+<script>
+/* ---------- WorkJam vars ---------- */
+const params = new URLSearchParams(window.location.search);
+const vars = {
+  // Location
+  externalLocationId:   params.get('externalLocationId')   || null,
+  externalLocationCode: params.get('externalLocationCode') || null,
+  address:              params.get('address')              || null,
+  city:                 params.get('city')                 || null,
+  stateOrProvince:      params.get('stateOrProvince')      || null,
+  country:              params.get('country')              || null,
+  zipCode:              params.get('zipCode')              || null,
+  // Region
+  externalRegionId:     params.get('externalRegionId')     || null,
+  externalRegionCode:   params.get('externalRegionCode')   || null,
+  // Employee
+  employeeId:           params.get('employeeId')           || null,
+  employeeCode:         params.get('employeeCode')         || null,
+  username:             params.get('username')             || null,
+  language:             params.get('language')             || 'en',
+  // Display
+  aspectRatio:          params.get('aspectRatio')          || 'standard',
+  // Custom
+  title:      params.get('title')      || 'Team Packet',
+  tagline:    params.get('tagline')    || 'Resources and guidance for your team',
+  linkTarget: params.get('linkTarget') || '_top',
+  now:        params.get('now')        || null,   // ISO date override to preview the 'updated' labels   // _top escapes the iframe so the WorkJam shell routes the link
+};
+
+const RATIOS = { standard:'4 / 3', square:'1 / 1', landscape:'16 / 9', portrait:'9 / 16' };
+const ratio = RATIOS[vars.aspectRatio] ? vars.aspectRatio : 'standard';
+const frame = document.getElementById('frame');
+frame.style.aspectRatio = RATIOS[ratio];
+frame.dataset.ratio = ratio;
+
+/* ---------- Knowledge Center deep links (override any with ?link_<key>=URL) ---------- */
+const KC = 'https://uat-app-next.workjam.com/knowledge-center';
+const LINKS = {
+  safety:      KC + '/04ab5b5a-f606-4c04-8869-42911a5a27db',   // Safety Hub
+  production:  KC + '/72470673-8dd5-4773-9c4f-3c048ee08d9a',   // Operations folder
+  quality:     KC + '/099b88d3-1456-4e7c-8ace-41a1f16461f5',   // Quality folder
+  recognition: KC + '/e3a73cc6-63e3-4778-81ff-75b91d803a2f',   // Recognition Hub
+  meeting:     KC + '/47b02f3d-5406-4b92-977c-87583323b88a',   // Team Meeting (Team Packets folder)
+};
+Object.keys(LINKS).forEach(k => { const o = params.get('link_' + k); if (o) LINKS[k] = o; });
+
+/* ---------- Last-updated labels: OFF by default ----------
+   The widget is static; Knowledge Center keeps its own content current.
+   Labels only appear if a date is supplied (?updated_<key>=YYYY-MM-DD) or a future live
+   feed fills UPDATED from GET /api/v3/companies/{companyId}/knowledgecenter/resources/{folderId}
+   (field: lastUpdateTimestamp). Leave empty to hide. */
+const UPDATED = { meeting:'', safety:'', production:'', quality:'', recognition:'' };
+Object.keys(UPDATED).forEach(k => { const o = params.get('updated_' + k); if (o) UPDATED[k] = o; });
+const FRESH_DAYS = 3;   // within this many days → coloured 'new' dot
+const NOW = vars.now ? new Date(vars.now) : new Date();
+const upd = k => {
+  const raw = UPDATED[k] || '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(raw);
+  if (!m) return { label:'', full:'', fresh:false };
+  const ts = raw.length > 10 ? new Date(raw) : null;
+  const d = ts && !isNaN(ts) ? new Date(ts.getFullYear(), ts.getMonth(), ts.getDate()) : new Date(+m[1], +m[2]-1, +m[3]);
+  const t0 = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
+  const days = Math.round((t0 - d) / 86400000);
+  const lang = vars.language || 'en';
+  let full; try { full = d.toLocaleDateString(lang, { year:'numeric', month:'long', day:'numeric' }); } catch(e) { full = d.toDateString(); }
+  let label;
+  if (days <= 0) label = 'Updated today';
+  else if (days === 1) label = 'Updated yesterday';
+  else if (days < 7) label = `Updated ${days}d ago`;
+  else if (days < 28) label = `Updated ${Math.floor(days/7)}w ago`;
+  else { try { label = 'Updated ' + d.toLocaleDateString(lang, { month:'short', day:'numeric' }); } catch(e) { label = 'Updated ' + full; } }
+  return { label, full: 'Last updated ' + full, fresh: days <= FRESH_DAYS };
+};
+
+/* ---------- Buttons ---------- */
+const S = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"';
+const ICONS = {
+  safety:      `<svg ${S}><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>`,
+  production:  `<svg ${S}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>`,
+  quality:     `<svg ${S}><path d="M12 2.5l2.4 1.8 3 .1.9 2.9 2.4 1.8-.9 2.9.9 2.9-2.4 1.8-.9 2.9-3 .1L12 21.5l-2.4-1.8-3-.1-.9-2.9-2.4-1.8.9-2.9-.9-2.9 2.4-1.8.9-2.9 3-.1z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>`,
+  meeting:     `<svg ${S}><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2a4.5 4.5 0 0 1 5 4.8"/></svg>`,
+  recognition: `<svg ${S}><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>`,
+};
+const ARROW = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M14 7l5 5-5 5"/></svg>`;
+
+const TOPICS = [
+  { key:'meeting',     title:'Team Meeting Topics', desc:'Weekly packet and discussion points' },
+  { key:'safety',      title:'Safety',      desc:'Procedures, alerts & guidelines' },
+  { key:'production',  title:'Production',  desc:'Operations guides & updates' },
+  { key:'quality',     title:'Quality',     desc:'Standards & inspection guidance' },
+  { key:'recognition', title:'Recognition', desc:'Celebrating team achievements' },
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('grid').innerHTML = TOPICS.map((t, i) => `
+  <a class="btn" data-k="${t.key}" href="${esc(LINKS[t.key])}" target="${esc(vars.linkTarget)}" rel="noopener" aria-label="Open ${t.title} in Knowledge Center"><div class="btn-in">
+    <div class="head"><span class="ic">${ICONS[t.key]}</span><span class="num ${upd(t.key).fresh?'fresh':''}" title="${upd(t.key).full}">${upd(t.key).label}</span></div>
+    <div class="txt"><h2 class="t2">${t.title}</h2><p class="d2">${t.desc}</p></div>
+    <span class="go">${ARROW}</span></div>
+  </a>`).join('');
+
+/* ---------- Masthead ---------- */
+document.getElementById('title').textContent = vars.title;
+document.getElementById('tagline').textContent = vars.tagline;
+{
+  const geo = [vars.city, vars.stateOrProvince].filter(Boolean).join(', ');
+  document.getElementById('loc').textContent = vars.externalLocationCode || geo || '';
+}
+
+/* Deterministic seed from canonical id (kept for parity with other builds) */
+const hash = s => { let h = 2166136261; for (const ch of String(s || 'gm')) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
+window.__workjam = { vars, LINKS, ratio, seed: hash(vars.externalLocationId) };
+</script>
+</body>
+</html>
